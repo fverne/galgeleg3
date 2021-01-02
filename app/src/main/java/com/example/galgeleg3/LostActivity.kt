@@ -1,4 +1,4 @@
-package com.example.galgeleg2
+package com.example.galgeleg3
 
 import android.os.Bundle
 import android.view.View

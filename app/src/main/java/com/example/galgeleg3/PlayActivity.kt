@@ -1,4 +1,4 @@
-package com.example.galgeleg2
+package com.example.galgeleg3
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -15,8 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.postDelayed
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import galgeleg.GalgelegsHenter
-import galgeleg.GalgelegsHenterFactory
 import galgeleg.Galgelogik
 import java.lang.reflect.Type
 import java.util.*
@@ -24,7 +22,7 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors.newSingleThreadExecutor
 
 
-class MainActivity : AppCompatActivity(), View.OnKeyListener {
+class PlayActivity : AppCompatActivity(), View.OnKeyListener {
     private lateinit var txtinput: TextView
     private lateinit var livestxt: TextView
     private lateinit var debugtxt: TextView

@@ -1,4 +1,4 @@
-package com.example.galgeleg2
+package com.example.galgeleg3
 
 import org.junit.Test
 
