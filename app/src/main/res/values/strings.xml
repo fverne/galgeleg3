@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">s173394 - Frederiks Galgeleg</string>
+    <string name="inputGuess">Indtast dit gæt her!</string>
+    <string name="livesleft">\ liv tilbage.</string>
+    <string name="youhave">Du har \ </string>
+    <string name="usedletters">Brugte Bogstaver: \ </string>
+    <string name="livesinit">Du har 6 liv. Et forkert gæt koster et liv.</string>
+    <string name="welcome">Velkommen til galgeleg! Gæt ordet ovenfor.</string>
+    <string name="pressback">Tryk tilbage for at starte et nyt spil.</string>
+    <string name="youused">Du brugte \ </string>
+    <string name="attempts"> \ forsøg.</string>
+    <string name="congrats">Tillykke! Du har vundet!</string>
+    <string name="wordwas">Ordet var: \ </string>
+    <string name="youlost">Du har tabt! Prøv igen.</string>
+    <string name="trueguess">Korrekt bogstav!</string>
+    <string name="falseguess">Forkert gæt!</string>
+</resources>
