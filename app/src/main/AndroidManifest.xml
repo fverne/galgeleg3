@@ -11,15 +11,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.example.galgeleg3.PlayActivity">
+        <activity android:name="com.example.galgeleg3.MainMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.galgeleg3.WonActivity"/>
-        <activity android:name="com.example.galgeleg3.LostActivity"/>
+        <activity
+            android:name="com.example.galgeleg3.LostActivity"
+            android:parentActivityName="com.example.galgeleg3.PlayActivity">
+        </activity>
+        <activity
+            android:name="com.example.galgeleg3.WonActivity"
+            android:parentActivityName="com.example.galgeleg3.PlayActivity">
+        </activity>
+        <activity
+            android:name="com.example.galgeleg3.PlayActivity"
+            android:parentActivityName="com.example.galgeleg3.MainMenuActivity">
+        </activity>
+
     </application>
 
 </manifest>

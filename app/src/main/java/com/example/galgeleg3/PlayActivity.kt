@@ -6,8 +6,8 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager.getDefaultSharedPreferences
-import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -17,12 +17,14 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import galgeleg.Galgelogik
 import java.lang.reflect.Type
+import java.sql.Types.NULL
 import java.util.*
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors.newSingleThreadExecutor
+import kotlin.collections.ArrayList
 
 
-class PlayActivity : AppCompatActivity(), View.OnKeyListener {
+class PlayActivity : AppCompatActivity() {
     private lateinit var txtinput: TextView
     private lateinit var livestxt: TextView
     private lateinit var debugtxt: TextView
@@ -31,16 +33,22 @@ class PlayActivity : AppCompatActivity(), View.OnKeyListener {
     private val galgelogik: Galgelogik = Galgelogik.getInstance()
     private val handler: Handler = Handler()
     private val bgthread: Executor = newSingleThreadExecutor()
+    private lateinit var getWordLocation: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_play)
 
-        var getWordLocation = "DR"
+        if (intent!!.hasExtra("type")) {
+            getWordLocation = intent.getStringExtra("type")!!
+            saveArrayList(arrayListOf(getWordLocation), "wordsString")
+        } else {
+            getWordLocation = getArrayList("wordsString")?.get(0).toString()
+        }
 
         // if there is no saved data
         if (getArrayList(getWordLocation).isNullOrEmpty()) {
-            // background thread does network stuff, and saves the retrieved data in storage
+            // background thread does network stuff, and saves the retrieved data locally in storage
             bgthread.execute {
                 println("Getting word from $getWordLocation")
                 galgelogik.hentOrdOnline(getWordLocation)
@@ -62,7 +70,7 @@ class PlayActivity : AppCompatActivity(), View.OnKeyListener {
     }
 
     // Changes enter button on keyboard to execute following code.
-    override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
+ /*   override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
 
         // if enter button is pressed on keyboard:
         if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
@@ -71,11 +79,13 @@ class PlayActivity : AppCompatActivity(), View.OnKeyListener {
 
             // check om spillet er slut, og start tabt/vundet skærmbilledet
             isGameOver()
-        }
 
-        // returner true så keyboardet ikke forsvinder
-        return true
-    }
+            // returner true så keyboardet ikke forsvinder
+            return true
+        } else {
+            return false
+        }
+    }*/
 
     // metode der sætter UI på skærmbilledet
     private fun initUI() {
@@ -84,8 +94,20 @@ class PlayActivity : AppCompatActivity(), View.OnKeyListener {
 
         txtinput = findViewById(R.id.guessinput)
         txtinput.visibility = View.VISIBLE
-        txtinput.setOnKeyListener(this)
         txtinput.requestFocus()
+        txtinput.setOnEditorActionListener { v, actionId, event ->
+            return@setOnEditorActionListener when (actionId) {
+                EditorInfo.IME_ACTION_SEND -> {
+                    //check if guess is correct, and act based on that
+                    evaluateGuess()
+
+                    // check om spillet er slut, og start tabt/vundet skærmbilledet
+                    isGameOver()
+                    true
+                }
+                else -> false
+            }
+        }
 
         livestxt = findViewById(R.id.lives)
         livestxt.text = getString(R.string.livesinit)
