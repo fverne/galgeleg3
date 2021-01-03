@@ -69,24 +69,6 @@ class PlayActivity : AppCompatActivity() {
         }
     }
 
-    // Changes enter button on keyboard to execute following code.
- /*   override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
-
-        // if enter button is pressed on keyboard:
-        if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-            //check if guess is correct, and act based on that
-            evaluateGuess()
-
-            // check om spillet er slut, og start tabt/vundet skærmbilledet
-            isGameOver()
-
-            // returner true så keyboardet ikke forsvinder
-            return true
-        } else {
-            return false
-        }
-    }*/
-
     // metode der sætter UI på skærmbilledet
     private fun initUI() {
         galgeimg = findViewById(R.id.galgeimg)
@@ -127,7 +109,7 @@ class PlayActivity : AppCompatActivity() {
             if (galgelogik.erSidsteBogstavKorrekt()) { // correct guess
                 debugtxt2.text = galgelogik.synligtOrd
                 Toast.makeText(this, getString(R.string.trueguess), Toast.LENGTH_LONG).show()
-            } else { // not correct guesss
+            } else { // not correct guess
                 livestxt.text =
                     getString(R.string.youhave) + (6 - galgelogik.antalForkerteBogstaver) + getString(
                         R.string.livesleft

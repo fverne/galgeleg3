@@ -1,10 +1,14 @@
 package com.example.galgeleg3
 
+import android.graphics.Color
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.airbnb.lottie.LottieAnimationView
 
 
 class WonActivity : AppCompatActivity() {
@@ -13,10 +17,14 @@ class WonActivity : AppCompatActivity() {
     private lateinit var debugtxt2: TextView
     private lateinit var galgeimg: ImageView
     private lateinit var inputtext: TextView
+    private lateinit var lottieconfetti: LottieAnimationView
+    private lateinit var mp : MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
+
+        mp = MediaPlayer.create(this, R.raw.fanfare);
 
         inputtext = findViewById(R.id.guessinput)
         inputtext.visibility = View.INVISIBLE
@@ -33,6 +41,20 @@ class WonActivity : AppCompatActivity() {
         debugtxt2 = findViewById(R.id.test2)
         debugtxt2.text = getString(R.string.congrats)
 
+        mp.start() // starts our music player to celebrate the player
 
+        lottieconfetti = findViewById(R.id.animationView)
+        lottieconfetti.playAnimation() // plays lottieanimation
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if (mp.isPlaying()) { // frees the resource allocated by the music player
+            mp.stop()
+            mp.release()
+        }
+
+        lottieconfetti.cancelAnimation() // stops the lottieanimations from playing when activity is destroyed
     }
 }
