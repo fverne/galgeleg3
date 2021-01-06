@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.activity_mainmenu.*
 class MainMenuActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var drdkbutton: Button
     private lateinit var regnearkbutton: Button
+    private lateinit var listbutton: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +23,9 @@ class MainMenuActivity : AppCompatActivity(), View.OnClickListener {
 
         regnearkbutton = findViewById(R.id.button2)
         regnearkbutton.setOnClickListener(this)
+
+        listbutton = findViewById(R.id.button3)
+        listbutton.setOnClickListener(this)
     }
 
 
@@ -34,6 +39,11 @@ class MainMenuActivity : AppCompatActivity(), View.OnClickListener {
         if (v == regnearkbutton) {
             val i = Intent(this, PlayActivity::class.java)
             i.putExtra("type", "Regneark")
+            startActivity(i)
+        }
+
+        if (v == listbutton) {
+            val i = Intent(this, WordListActivity::class.java)
             startActivity(i)
         }
     }

@@ -3,6 +3,7 @@
     package="com.example.galgeleg3">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,8 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name="com.example.galgeleg3.MainMenuActivity">
+        <activity android:name=".MainMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,18 +19,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.galgeleg3.LostActivity"
-            android:parentActivityName="com.example.galgeleg3.PlayActivity">
-        </activity>
+            android:name=".LostActivity"
+            android:parentActivityName=".PlayActivity" />
         <activity
-            android:name="com.example.galgeleg3.WonActivity"
-            android:parentActivityName="com.example.galgeleg3.PlayActivity">
-        </activity>
+            android:name=".WonActivity"
+            android:parentActivityName=".PlayActivity" />
         <activity
-            android:name="com.example.galgeleg3.PlayActivity"
-            android:parentActivityName="com.example.galgeleg3.MainMenuActivity">
-        </activity>
-
+            android:name=".PlayActivity"
+            android:parentActivityName=".MainMenuActivity" />
+        <activity
+            android:name=".WordListActivity"
+            android:parentActivityName=".PlayActivity" />
     </application>
 
 </manifest>
