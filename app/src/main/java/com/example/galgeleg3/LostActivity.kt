@@ -32,7 +32,5 @@ class LostActivity : AppCompatActivity() {
 
         debugtxt2 = findViewById(R.id.test2)
         debugtxt2.text = getString(R.string.youlost)
-
-
     }
 }

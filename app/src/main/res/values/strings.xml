@@ -14,4 +14,8 @@
     <string name="youlost">Du har tabt! Prøv igen.</string>
     <string name="trueguess">Korrekt bogstav!</string>
     <string name="falseguess">Forkert gæt!</string>
+    <string name="indl_ser_data_fra_internettet">Indlæser data fra internettet...</string>
+    <string name="vent_venligst">Vent venligst</string>
+    <string name="indtast_g_t_her">Indtast gæt her</string>
+    <string name="todo">TODO</string>
 </resources>

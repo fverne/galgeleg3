@@ -1,15 +1,16 @@
-import android.content.Context
 import com.example.galgeleg3.R
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-
-class MyRecyclerViewAdapter internal constructor(context: Context?, data: List<String>) :
-    RecyclerView.Adapter<ViewHolder>() {
-    private val mData: List<String>
+// adapter taget fra stackoverflow
+class MyRecyclerViewAdapter internal constructor(context: Context?, data: ArrayList<String>, difficulty: ArrayList<String>) :
+    RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
+    private val mData: ArrayList<String>
+    private val mDifficulty: ArrayList<String>
     private val mInflater: LayoutInflater
     private var mClickListener: ItemClickListener? = null
 
@@ -21,8 +22,10 @@ class MyRecyclerViewAdapter internal constructor(context: Context?, data: List<S
 
     // binds the data to the TextView in each row
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val animal = mData[position]
-        holder.myTextView.text = animal
+        val word = mData[position]
+        val difficulty = mDifficulty[position]
+        holder.myTextView.text = word
+        holder.myTextView2.text = difficulty.toString()
     }
 
     // total number of rows
@@ -31,15 +34,17 @@ class MyRecyclerViewAdapter internal constructor(context: Context?, data: List<S
     }
 
     // stores and recycles views as they are scrolled off screen
-    inner class ViewHolder internal constructor(itemView: View) : ViewHolder(itemView),
+    inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         var myTextView: TextView
+        var myTextView2: TextView
         override fun onClick(view: View?) {
-            if (mClickListener != null) mClickListener!!.onItemClick(view, getAdapterPosition())
+            if (mClickListener != null) mClickListener!!.onItemClick(view, adapterPosition)
         }
 
         init {
-            myTextView = itemView.findViewById(R.id.tvAnimalName)
+            myTextView = itemView.findViewById(R.id.tvWordName)
+            myTextView2 = itemView.findViewById(R.id.tvWordName2)
             itemView.setOnClickListener(this)
         }
     }
@@ -63,5 +68,6 @@ class MyRecyclerViewAdapter internal constructor(context: Context?, data: List<S
     init {
         mInflater = LayoutInflater.from(context)
         mData = data
+        mDifficulty = difficulty
     }
 }

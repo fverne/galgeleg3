@@ -12,16 +12,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.postDelayed
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import galgeleg.Galgelogik
 import java.lang.reflect.Type
-import java.sql.Types.NULL
 import java.util.*
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors.newSingleThreadExecutor
-import kotlin.collections.ArrayList
 
 
 class PlayActivity : AppCompatActivity() {
@@ -39,6 +36,7 @@ class PlayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
 
+        // if it should get the word from online, checks the type (DR or Regneark). This is saved locally for later.
         if (intent!!.hasExtra("type")) {
             getWordLocation = intent.getStringExtra("type")!!
             saveArrayList(arrayListOf(getWordLocation), "wordsString")
@@ -61,6 +59,12 @@ class PlayActivity : AppCompatActivity() {
                     initUI()
                 }
             }
+            // else, if the word was from a list
+        } else if (intent!!.hasExtra("listWord")) {
+            val temparray = intent.getStringArrayListExtra("listWord")
+            galgelogik.setMuligeOrd(temparray)
+            galgelogik.startNytSpil()
+            initUI()
         } else { // else, load the saved data and load the UI
             println("Getting word from cache...")
             galgelogik.setMuligeOrd(getArrayList(getWordLocation))
@@ -130,7 +134,6 @@ class PlayActivity : AppCompatActivity() {
             //kunne forbedres så det ikke var den rene toString(), så ingen brackets
             debugtxt.text = getString(R.string.usedletters) + galgelogik.brugteBogstaver.toString()
             txtinput.text = null
-
         }
     }
 
@@ -146,15 +149,8 @@ class PlayActivity : AppCompatActivity() {
                 startActivity(i)
             }
 
-            // genstart spillet, så det er klart når man returnerer fra tabt/vundet skærmbilledet og vil spille igen
-            // delay tilføjet for at gøre animationen for intentskiftet mere flydende
-            handler.postDelayed(1000) {
-                recreate()
-            }
-
         }
     }
-
 
     // https://stackoverflow.com/questions/7057845/save-arraylist-to-sharedpreferences
     // gem listen af ord som et json objekt i preferencemanager
@@ -175,6 +171,12 @@ class PlayActivity : AppCompatActivity() {
         val json: String? = prefs.getString(key, null)
         val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
         return gson.fromJson(json, type)
+    }
+
+    //sends us to main menu when game is lost/won
+    override fun onPause() {
+        super.onPause()
+        finish()
     }
 }
 
